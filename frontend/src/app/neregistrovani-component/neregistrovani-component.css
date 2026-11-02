@@ -1,0 +1,131 @@
+body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    background-color: #f0f4f4;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  
+  header, footer {
+    background-color: #669999;
+    color: white;
+    text-align: center;
+    padding: 1.2rem;
+  }
+  
+  .page-container {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+  
+  main.content-dashboard {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    padding: 1rem;
+    flex: 1;
+  }
+  
+  .card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    padding: 1rem;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .bordered-card {
+    border: 2px solid #669999;
+  }
+  
+  .stat-card {
+    flex: 1 1 30%;
+    min-width: 200px;
+    max-width: 300px;
+    text-align: center;
+    padding: 1rem;
+  }
+  .scrollable-vikendice {
+    max-height: 350px;
+    overflow-y: auto;
+    padding-right: 0.5rem;
+    margin-bottom: 0.5rem; /* reduce spacing at bottom */
+  }
+  .vikendice-card {
+    flex: 1 1 90%;
+    max-width: 100%;
+    padding: 1rem; /* reduce bottom padding if needed */
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .full-width-card {
+    width: 100%;
+  }
+  
+  .scrollable-card {
+    max-height: 350px;
+    overflow-y: auto;
+    padding-right: 0.5rem;
+  }
+  
+  .vikendica-item {
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+    border-radius: 6px;
+    transition: background 0.3s;
+  }
+  
+  .vikendica-item:hover {
+    background: linear-gradient(90deg, #66999922, #66999911);
+  }
+  button.mat-raised-button {
+    background-color: var(--primary-color) !important;
+    color: white !important;
+  }
+  
+  button.mat-raised-button[color="accent"] {
+    background-color: var(--accent-color) !important;
+    color: white !important;
+  }
+  .buttons-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* center buttons horizontally */
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+  }
+  
+  button {
+    background-color: #669999;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #557777;
+  }
+  
+  input[type="text"] {
+    padding: 0.4rem;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+  }
+  
+  footer {
+    margin-top: auto;
+  }
+  
+  @media (max-width: 1024px) {
+    .stat-card, .vikendice-card { flex: 1 1 100%; }
+  }
+  

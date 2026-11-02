@@ -1,0 +1,173 @@
+<div class="page-container">
+    <header class="header">
+        <div class="header-left">
+            <h1>Pocetna </h1>
+            </div>
+        
+            <div class="header-right">
+            <!-- <button mat-button (click)="pocetna()">Početna</button> -->
+            <button mat-button (click)="izlogujSe()">Izloguj se</button>
+            </div>
+        </header>
+  
+    <main class="content">
+  
+      <!-- Vikendice Listing -->
+      <div class="card bordered-card vikendica-card">
+        <h2>Vikendice</h2>
+        <div class="vikendice-list scrollable-card">
+          @if(filter==false) {
+            @for(v of vikendice; track $index) {
+              <div class="vikendica-item">
+                <strong>{{v.imeVikendice}}</strong><br>
+                <a [routerLink]="['/vikendica', removeWhitespace(v.imeVikendice)]">Vidi detalje</a><br>
+                Cena: {{v.cena}} | Mesto: {{v.mesto}}<br>
+                Telefon: {{v.telefon}} | Usluge: {{v.usluge}}<br>
+                Vlasnik: {{v.imeVlasnika}} | Ocena: {{v.prosek}} <br>
+                <div class="star-rating">
+                    <ng-container *ngFor="let star of stars; let i = index">
+                      <span class="star"
+                            [ngClass]="{
+                              'filled': i + 1 <= v.prosek,
+                              'half-filled': i + 0.5 === v.prosek
+                            }">
+                        &#9733;
+                      </span>
+                    </ng-container>
+                  </div>
+                  </div>
+            }
+          } @else {
+            @for(v of filterVikendica; track $index) {
+              <div class="vikendica-item">
+                <strong>{{v.imeVikendice}}</strong><br>
+                <a [routerLink]="['/vikendica', removeWhitespace(v.imeVikendice)]">Vidi detalje</a><br>
+                Cena: {{v.cena}} | Mesto: {{v.mesto}}<br>
+                Telefon: {{v.telefon}} | Usluge: {{v.usluge}}<br>
+                Vlasnik: {{v.imeVlasnika}} | Ocena: {{v.prosek}} <br>
+                <div class="star-rating">
+                    <ng-container *ngFor="let star of stars; let i = index">
+                      <span class="star"
+                            [ngClass]="{
+                              'filled': i + 1 <= v.prosek,
+                              'half-filled': i + 0.5 === v.prosek
+                            }">
+                        &#9733;
+                      </span>
+                    </ng-container>
+                  </div>
+              </div>
+            }
+          }
+        </div>
+        <div class="controls">
+          <button (click)="sortirajNeopadajuce()">Sortiraj neopadajuce</button>
+          <button (click)="sortirajNerastuce()">Sortiraj nerastuce</button> <br>
+          <input type="text" placeholder="Ime vikendice" [(ngModel)]="imeVikendice">
+          <input type="text" placeholder="Mesto" [(ngModel)]="mestoVikendice">
+          <button (click)="pretrazi(imeVikendice, mestoVikendice)">Pretrazi</button>
+          <button (click)="resetujPretragu()">Resetuj filtriranu pretragu</button>
+        </div>
+      </div>
+  
+      <!-- Profil Information -->
+      <div class="card bordered-card profil-card">
+        <h2>Profil</h2>
+        <div>
+          {{korisnik.ime}} {{korisnik.prezime}}<br>
+          Telefon: {{korisnik.telefon}}<br>
+          Adresa: {{korisnik.adresa}}<br>
+          Imejl: {{korisnik.imejl}}<br>
+          Broj kartice: {{korisnik.broj_kreditne_kartice}}<br>
+          <img [src]="'http://localhost:8080/upload/' + korisnik.profilna_slika" alt="Profilna slika" class="profile-img">
+        </div>
+      </div>
+  
+      <!-- Rezervacije -->
+      <div class="card bordered-card rezervacije-card">
+        <h2>Rezervacije</h2>
+        <div class="scrollable-card">
+          @for(r of rezervacije; track $index) {
+            <div class="rezervacija-item">
+              Datum pocetka: {{r.datumPocetka}}<br>
+              Datum kraja: {{r.datumKraja}}<br>
+              Ime vikendice: {{r.imeVikendice}}<br>
+              @for(v of vikendice; track $index) {
+                @if(v.imeVikendice == r.imeVikendice) {
+                  Mesto: {{v.mesto}}
+                }
+              }
+              @if(r.arhivirano == true) {
+                <form [formGroup]="reviewForm" (submit)="submitReview(r)">
+                  <label>Komentar</label><br>
+                  <textarea formControlName="comment"></textarea><br>
+                  <label>Ocena</label>
+                  <div class="star-container" (mouseleave)="resetHover()">
+                    <span *ngFor="let star of stars; let i = index"
+                          class="star"
+                          [class.filled]="i < (hoverRating || reviewForm.get('rating')!.value!)"
+                          (click)="setRating(i + 1)"
+                          (mouseenter)="hoverRating = i + 1">
+                      &#9733;
+                    </span>
+                  </div>
+                  <button type="submit">Ostavi recenziju</button>
+                </form>
+              } @else if(r.aktivirano == true) {
+                @if(proveraVremena(r.datumPocetka) == true) {
+                  <button (click)="obrisiRezervaciju(r)">Otkazi rezervaciju</button>
+                }
+              }
+            </div>
+          }
+        </div>
+      </div>
+  
+      <!-- Izmeni podatke -->
+      <div class="card bordered-card profil-update-card">
+        <h2>Izmeni podatke</h2>
+        <form #changeForm="ngForm" (ngSubmit)="updateInformation(novi_korisnik)">
+            <form #changeForm="ngForm" (ngSubmit)="updateInformation(novi_korisnik)">
+            <input type="text" name="ime" [(ngModel)]="novi_korisnik.ime" placeholder="Ime"> <br>
+            <input type="text" name="prezime" [(ngModel)]="novi_korisnik.prezime" placeholder="Prezime"> <br>
+            <input type="text" name="adresa" [(ngModel)]="novi_korisnik.adresa" placeholder="Adresa"> <br>
+            <input type="text" name="telefon" [(ngModel)]="novi_korisnik.telefon" placeholder="Telefon"> <br>
+            <input type="text" name="imejl" [(ngModel)]="novi_korisnik.imejl" (ngModelChange)="isEmailValid($event)" placeholder="Imejl"> <br>
+            {{this.emailError}} <br>
+            <input type="file" accept="image/*" name="profilna" (change)="onFileSelected($event)"> <br>
+           <div> @if(this.dimensionError) { {{dimensionError}} }</div>
+            <input type="text" name="broj_kreditne_kartice" [(ngModel)]="novi_korisnik.broj_kreditne_kartice" (ngModelChange)="isCreditCardValid($event)" placeholder="Broj kartice"> <br>
+            <div *ngIf="visaKartica"><img src="visa.png" width="50px" height="50px"></div>
+            <div *ngIf="dinersKartica"><img src="Diners-Club-International-icon.png" width="50px" height="50px"></div>
+            <div *ngIf="masterCard"><img src="mastercard.svg" width="50px" height="50px"></div>
+            <div *ngIf="!visaKartica && !dinersKartica && !masterCard">{{this.creditCardError}}</div> <br>
+            <button type="submit" [disabled]="changeForm.invalid || this.creditCardError || this.emailError">Izmenite podatke</button>
+            {{this.updateMessage}}
+          </form>
+          
+        </form>
+      </div>
+  
+      <!-- Promeni šifru -->
+      <div class="card bordered-card password-card">
+        <h2>Promeni šifru</h2>
+        <form #form="ngForm" (ngSubmit)="changePassword(oldPassword,newPassword)">
+          <label>Stara lozinka:</label><br>
+          <input type="password" name="oldPassword" [(ngModel)]="oldPassword" (ngModelChange)="comparePasswords(oldPassword,newPassword)" required> <br>
+          <label>Nova lozinka:</label><br>
+          <input type="password" name="newPassword" [(ngModel)]="newPassword" (ngModelChange)="comparePasswords(oldPassword,newPassword); isValidPassword(newPassword)" required> <br>
+          <label>Ponovi novu lozinku:</label><br>
+          <input type="password" name="newPasswordRepeated" [(ngModel)]="newPasswordRepeated" (ngModelChange)="compareNewPasswords(newPassword, newPasswordRepeated)" required> <br>
+          <button type="submit" [disabled]="this.samePassword">Change password</button>
+          @if(this.samePassMsg) { {{this.samePassMsg}} } <br>
+          @if(this.passwordError) { {{this.passwordError}} }
+          {{this.msgPass}} <br>
+        </form>
+      </div>
+  
+    </main>
+  
+    <footer>
+      <p>Vikendica &copy; 2025</p>
+    </footer>
+  </div>

@@ -1,0 +1,341 @@
+/* Global layout */
+.page-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #f5f9f9;
+  font-family: 'Roboto', sans-serif;
+  color: #333;
+}
+
+/* Header */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #669999; /* your chosen color */
+  color: white;
+  padding: 15px 20px;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+/* Push the main content below the fixed header */
+.content {
+  margin-top: 80px; /* adjust according to header height */
+}
+
+/* Header buttons */
+.header button {
+  font-size: 0.85rem;
+  padding: 4px 10px;
+  border-radius: 8px;
+  background-color: #3f51b5;
+  color: white;
+  border: none;
+  transition: 0.2s;
+}
+
+.header button:hover {
+  background-color: #5c6bc0;
+}
+.header-right button {
+  background-color: white;
+  color: #669999;
+  border: none;
+  border-radius: 20px;
+  padding: 0.35rem 0.9rem;
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: 0.2s;
+}
+
+.header-right button:hover {
+  background-color: #e0f0f0;
+}
+
+/* Content area */
+.content {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  padding: 7rem 2rem 3rem;
+  overflow: visible;
+}
+/* Page structure */
+.page-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Main content layout */
+.content {
+  display: flex;
+  flex: 1;
+  padding: 20px;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+/* Left and right panels */
+.left-panel,
+.right-panel {
+  flex: 1 1 50%;
+  max-width: 50%;
+  box-sizing: border-box;
+}
+
+/* Keep your right panel (calendar) styling clean */
+.right-panel {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  min-height: 600px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+/* Ensure the left content scrolls nicely */
+.left-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  overflow-y: auto;
+  max-height: calc(100vh - 140px);
+}
+
+/* Make it responsive for smaller screens */
+@media (max-width: 900px) {
+  .left-panel,
+  .right-panel {
+    flex: 1 1 100%;
+    max-width: 100%;
+  }
+}
+
+/* Calendar fix */
+.full-calendar {
+  width: 100%;
+  height: auto;
+  min-height: 500px;
+  z-index: 5;
+  visibility: visible;
+}
+
+
+/* Cards */
+.vikendica-card,
+.vikendica-form-container,
+.profile-card,
+.rezervacije-card,
+.forms-card {
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  padding: 1rem 1.5rem;
+}
+.forms-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+}
+
+.forms-card h2 {
+  color: #336666;
+  font-size: 1.2em;
+  margin-bottom: 10px;
+}
+
+.forms-card form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.forms-card input,
+.forms-card textarea {
+  width: 70%;
+  padding: 8px;
+  border: 1px solid #bbb;
+  border-radius: 6px;
+  font-size: 0.95em;
+}
+
+.forms-card button {
+  align-self: flex-start;
+  padding: 6px 14px;
+  font-size: 0.9em;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.forms-card label {
+  font-weight: 500;
+  color: #555;
+}
+
+.forms-card input[type="file"] {
+  border: none;
+  padding: 0;
+}
+
+.vikendica-card b,
+.profile-card b,
+.rezervacije-card b,
+.forms-card b {
+  color: #336666;
+}
+
+/* Scrollable containers */
+.scrollable-vikendice,
+.scrollable-rezervacije {
+  max-height: 300px;
+  overflow-y: auto;
+  padding-right: 0.5rem;
+}
+
+/* Upload & form styling */
+.vikendica-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem; /* reduced spacing between fields */
+}
+
+.upload-section {
+  margin: 0.5rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.upload-section label {
+  font-weight: 500;
+}
+
+/* Buttons (same as before, smaller) */
+button {
+  background-color: #669999;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 0.45rem 1.1rem;
+  cursor: pointer;
+  transition: 0.2s;
+  font-size: 0.9rem;
+}
+
+button:hover {
+  background-color: #4d8080;
+}
+
+button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+/* Profile image */
+.profile-img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-top: 0.5rem;
+}
+
+/* Calendar fixes */
+.fc {
+  z-index: 5 !important;
+  overflow: visible !important;
+}
+
+/* .mat-datepicker-content,
+.mat-calendar {
+  z-index: 2000 !important;
+} */
+
+.fc-view-harness {
+  overflow: visible !important;
+}
+.right-panel {
+  flex: 1;
+  padding: 20px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+  overflow: visible;
+}
+
+full-calendar,
+.modern-calendar,
+.fc {
+  display: block !important;
+  width: 100%;
+  min-height: 600px;
+  height: auto;
+  visibility: visible !important;
+  z-index: 10 !important;
+}
+
+.header button {
+  font-size: 0.8rem;
+  padding: 4px 10px;
+  border-radius: 8px;
+  background-color: #3f51b5;
+  color: white;
+  border: none;
+  transition: 0.2s;
+}
+
+.header button:hover {
+  background-color: #5c6bc0;
+}
+
+.fc {
+  background-color: #fff;
+}
+
+/* Dialog */
+dialog {
+  border: none;
+  border-radius: 12px;
+  padding: 1.5rem;
+  background: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Footer */
+footer {
+  background-color: #669999;
+  color: white;
+  text-align: center;
+  padding: 1rem;
+  margin-top: auto;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .content {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .left-panel, .right-panel {
+    width: 100%;
+  }
+
+  .right-panel {
+    min-height: 400px;
+  }
+}

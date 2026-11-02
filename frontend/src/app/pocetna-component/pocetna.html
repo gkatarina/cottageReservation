@@ -1,0 +1,85 @@
+<div class="page-container">
+
+  <header>
+    <h1>Dobrodošli</h1>
+  </header>
+
+  <main class="content">
+    <a [routerLink]="this.dobrodosli">Nastavite kao neregistrovan korisnik</a>
+
+    <!-- Login Card -->
+    <div class="card login-card">
+      <h2>Ulogujte se</h2>
+      <div>
+        Korisničko ime: <br>
+        <input type="text" [(ngModel)]="kor_ime"> <br>
+        Lozinka: <br>
+        <input type="password" [(ngModel)]="lozinka"> <br>
+        <input type="checkbox" [(ngModel)]="vlasnik"> Ulogujte se kao vlasnik <br>
+        <button (click)="login(kor_ime, lozinka, vlasnik)">Ulogujte se</button>
+        {{this.message}}
+      </div>
+    </div>
+
+    <!-- Registration Card -->
+    <div class="card register-card">
+      <h2>Registrujte se</h2>
+      <form #registerForm="ngForm" ngNativeValidate>
+        <div>
+          Korisničko ime: <br>
+          <input type="text" name="kor_ime" [(ngModel)]="novi_korisnik.kor_ime" (ngModelChange)="isValidUsername($event)" required> <br>
+          {{this.usernameError}} <br>
+
+          Lozinka: <br>
+          <input type="password" name="lozinka" [(ngModel)]="novi_korisnik.lozinka" (ngModelChange)="isValidPassword($event)" required> <br>
+          {{this.passwordError}} <br>
+
+          Ime: <br>
+          <input type="text" name="ime" [(ngModel)]="novi_korisnik.ime" required> <br>
+          Prezime: <br>
+          <input type="text" name="prezime" [(ngModel)]="novi_korisnik.prezime" required> <br>
+
+          Pol: <br>
+          <input type="radio" name="pol" value="r_muski" [(ngModel)]="r_muski" required> Muški<br>
+          <input type="radio" name="pol" value="r_zenski" [(ngModel)]="r_zenski" required> Ženski<br>
+
+          Adresa: <br>
+          <input type="text" name="adresa" [(ngModel)]="novi_korisnik.adresa" required> <br>
+          Kontakt telefon: <br>
+          <input type="text" name="telefon" [(ngModel)]="novi_korisnik.telefon" required> <br>
+          Imejl: <br>
+          <input type="text" name="imejl" [(ngModel)]="novi_korisnik.imejl" (ngModelChange)="isEmailValid($event)" required> <br>
+          {{this.emailError}} <br>
+
+          Profilna slika: <br>
+          <input type="file" accept="image/*" name="profilna" (change)="onFileSelected($event)"> <br>
+          <div>
+            @if(this.dimensionError) {
+              {{dimensionError}}
+            }
+          </div>
+          Broj kreditne kartice: <br>
+          <input type="text" name="broj_kreditne_kartice" [(ngModel)]="novi_korisnik.broj_kreditne_kartice" (ngModelChange)="isCreditCardValid($event)" required> <br>
+          <div *ngIf="visaKartica"><img src="visa.png" width="50px" height="50px"></div>
+          <div *ngIf="dinersKartica"><img src="Diners-Club-International-icon.png" width="50px" height="50px"></div>
+          <div *ngIf="masterCard"><img src="mastercard.svg" width="50px" height="50px"></div>
+          <div *ngIf="!visaKartica && !dinersKartica && !masterCard">{{this.creditCardError}}</div> <br>
+
+          Registrujem se kao: <br>
+          <input type="radio" name="tip" value="r_kupac" [(ngModel)]="r_kupac" required> Kupac <br>
+          <input type="radio" name="tip" value="r_vlasnik" [(ngModel)]="r_vlasnik" required> Vlasnik <br>
+
+          <div *ngIf="registerForm.invalid">Popunite sva polja</div>
+
+          <input type="submit" value="Registrujte se" (click)="register()">
+          {{this.registracijaLog}}
+        </div>
+      </form>
+    </div>
+
+  </main>
+
+  <footer>
+    <p>Vikendica</p>
+  </footer>
+</div>

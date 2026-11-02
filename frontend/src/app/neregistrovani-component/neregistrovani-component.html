@@ -1,0 +1,91 @@
+<div class="page-container">
+    <header class="header">
+        <div class="header-left">
+        <h1>Dobrodošli</h1>
+        </div>
+    
+        <div class="header-right">
+        <button mat-button (click)="pocetna()">Početna</button>
+        </div>
+    </header>
+  
+    <main class="content-dashboard">
+  
+      <!-- Stats Cards -->
+      <div class="card bordered-card stat-card">
+        <h2>Broj vikendica u sistemu</h2>
+        <p>{{this.vikendice.length}}</p>
+      </div>
+  
+      <div class="card bordered-card stat-card">
+        <h2>Broj registrovanih kupaca</h2>
+        <p>{{this.brojKupaca}}</p>
+      </div>
+  
+      <div class="card bordered-card stat-card">
+        <h2>Broj registrovanih vlasnika</h2>
+        <p>{{this.brojVlasnika}}</p>
+      </div>
+  
+      <div class="card bordered-card stat-card">
+        <h2>Rezervacije u poslednjih 24h</h2>
+        <p>{{this.brojRezervacija24}}</p>
+      </div>
+  
+      <div class="card bordered-card stat-card">
+        <h2>Rezervacije u poslednjih 7 dana</h2>
+        <p>{{this.brojRezervacija7}}</p>
+      </div>
+  
+      <div class="card bordered-card stat-card">
+        <h2>Rezervacije u poslednjih 30 dana</h2>
+        <p>{{this.brojRezervacija30}}</p>
+      </div>
+  
+      <!-- Vikendice Listing Full Width -->
+      <div class="card bordered-card vikendice-card full-width-card">
+        <h2>Vikendice</h2>
+        <div class="scrollable-card scrollable-vikendice">
+          @if(filter==false) {
+            @for(v of vikendice; track $index) {
+              <div class="vikendica-item">
+                <strong>{{v.imeVikendice}}</strong><br>
+                Cena: {{v.cena}}<br>
+                Mesto: {{v.mesto}}<br>
+                Telefon: {{v.telefon}}<br>
+                Usluge: {{v.usluge}}<br>
+                Vlasnik: {{v.imeVlasnika}}<br>
+              </div>
+            }
+          } @else {
+            @for(v of filterVikendica; track $index) {
+              <div class="vikendica-item">
+                <strong>{{v.imeVikendice}}</strong><br>
+                Cena: {{v.cena}}<br>
+                Mesto: {{v.mesto}}<br>
+                Telefon: {{v.telefon}}<br>
+                Usluge: {{v.usluge}}<br>
+                Vlasnik: {{v.imeVlasnika}}<br>
+              </div>
+            }
+          }
+        </div>
+  
+        <div class="buttons-container">
+          <button (click)="sortirajNeopadajuce()">Sortiraj neopadajuce</button>
+          <button (click)="sortirajNerastuce()">Sortiraj nerastuce</button>
+          <input type="text" placeholder="Ime vikendice" [(ngModel)]="imeVikendice">
+          <input type="text" placeholder="Mesto" [(ngModel)]="mestoVikendice">
+          <button (click)="pretrazi(imeVikendice, mestoVikendice)">Pretrazi</button>
+          <button (click)="resetujPretragu()">Resetuj filtriranu pretragu</button>
+        </div>
+  
+      </div>
+  
+    </main>
+  
+    <footer>
+      <p>Vikendica &copy; 2025</p>
+    </footer>
+  </div>
+  

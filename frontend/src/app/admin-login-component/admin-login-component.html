@@ -1,0 +1,16 @@
+<div class="login-container">
+    <div class="login-card">
+      <h2>Ulogujte se</h2>
+      <div class="login-form">
+        <label>Korisničko ime:</label>
+        <input type="text" [(ngModel)]="kor_ime" placeholder="Unesite korisničko ime">
+  
+        <label>Lozinka:</label>
+        <input type="password" [(ngModel)]="lozinka" placeholder="Unesite lozinku">
+  
+        <button (click)="login(kor_ime, lozinka)">Ulogujte se</button>
+        <p class="message">{{this.message}}</p>
+      </div>
+    </div>
+  </div>
+  

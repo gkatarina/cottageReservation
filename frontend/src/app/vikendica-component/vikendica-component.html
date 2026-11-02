@@ -1,0 +1,151 @@
+<div class="page-container">
+
+    <!-- HEADER -->
+    <header class="header">
+    <div class="header-left">
+        <h1>{{ vikendica.imeVikendice }}</h1>
+        </div>
+    
+        <div class="header-right">
+        <button mat-button (click)="pocetna()">Početna</button>
+        <button mat-button (click)="izlogujSe()">Izloguj se</button>
+        </div>
+    </header>
+  
+    <main class="content">
+  
+      <!-- LEFT COLUMN -->
+      <section class="left-column">
+        <!-- Info -->
+        <div class="info-card">
+          <h2>Informacije</h2>
+          <p><strong>Cena:</strong> {{ vikendica.cena }}</p>
+          <p><strong>Telefon:</strong> {{ vikendica.telefon }}</p>
+          <p><strong>Usluge:</strong> {{ vikendica.usluge }}</p>
+          <p><strong>Vlasnik:</strong> {{ vikendica.imeVlasnika }}</p>
+        </div>
+  
+        <!-- Gallery -->
+        <div class="gallery">
+          <h2>Galerija</h2>
+          <div class="gallery-grid">
+            @for(slika of this.galerija; track $index) {
+              <img [src]="'http://localhost:8080/gallery/' + slika" alt="Slika vikendice">
+            }
+          </div>
+        </div>
+  
+        <!-- Map -->
+        <div class="map-container">
+          <h2>Lokacija</h2>
+          <iframe [src]="this.mapUrl"
+                  allowfullscreen
+                  loading="lazy"
+                  referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+        </div>
+      </section>
+  
+      <!-- RIGHT COLUMN -->
+      <section class="reservation-section">
+        <h2>Rezervacija</h2>
+  
+        <mat-stepper orientation="vertical" [linear]="isLinear" #stepper>
+          <!-- STEP 1 -->
+          <mat-step [stepControl]="firstFormGroup">
+            <form [formGroup]="firstFormGroup" class="vertical-form">
+              <ng-template matStepLabel>Odaberite datum letovanja</ng-template>
+  
+              <mat-form-field appearance="fill">
+                <mat-label>Datum letovanja</mat-label>
+                <mat-date-range-input [rangePicker]="picker">
+                  <input matStartDate placeholder="Početak" #startDateInput>
+                  <input matEndDate placeholder="Kraj" #endDateInput
+                         (dateChange)="onDateRangeChange(startDateInput.value, endDateInput.value)">
+                </mat-date-range-input>
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-date-range-picker #picker></mat-date-range-picker>
+              </mat-form-field>
+  
+              <mat-form-field appearance="fill">
+                <mat-label>Broj odraslih</mat-label>
+                <input matInput formControlName="brOdraslih" required>
+              </mat-form-field>
+  
+              <mat-form-field appearance="fill">
+                <mat-label>Broj dece</mat-label>
+                <input matInput formControlName="brDece" required>
+              </mat-form-field>
+  
+              <button mat-raised-button color="primary" matStepperNext>Dalje</button>
+            </form>
+          </mat-step>
+  
+          <!-- STEP 2 -->
+          <mat-step [stepControl]="secondFormGroup">
+            <form [formGroup]="secondFormGroup" class="vertical-form">
+              <ng-template matStepLabel>Kreditna kartica</ng-template>
+  
+              <mat-form-field appearance="fill">
+                <mat-label>Trenutni broj kreditne kartice</mat-label>
+                <input matInput formControlName="broj_kreditne_kartice"
+                       [placeholder]="this.korisnik.broj_kreditne_kartice"
+                       #brKredKartice (input)="checkCreditCard(brKredKartice.value)">
+                <mat-error>{{ this.creditCardError }}</mat-error>
+              </mat-form-field>
+  
+              <mat-form-field appearance="fill">
+                <mat-label>Cena rezervacije</mat-label>
+                <input matInput [value]="this.rezervacija.cena" disabled>
+              </mat-form-field>
+  
+              <mat-form-field appearance="fill">
+                <mat-label>Dodatne informacije</mat-label>
+                <textarea matInput formControlName="dodatneInformacije"
+                          placeholder="Komentar..." maxlength="500"></textarea>
+              </mat-form-field>
+  
+              <div class="step-buttons">
+                <button mat-stroked-button matStepperPrevious>Nazad</button>
+                <button mat-raised-button color="primary" matStepperNext>Dalje</button>
+              </div>
+            </form>
+          </mat-step>
+  
+          <!-- STEP 3 -->
+          <mat-step>
+            <ng-template matStepLabel>Potvrda rezervacije</ng-template>
+            <div class="confirm-step">
+              <button mat-stroked-button matStepperPrevious>Nazad</button>
+              <button mat-raised-button color="accent" (click)="posaljiRezervaciju()">Rezerviši</button>
+              <mat-label>{{this.rezervacijaInfo}}</mat-label>
+            </div>
+          </mat-step>
+        </mat-stepper>
+        <h2>Recenzije</h2>
+      @for(recenzija of this.recenzije; track $index) {
+        <div class="review-card">
+          <strong>Korisnik {{ recenzija.vlasnik }}</strong>
+          <p>{{ recenzija.komentar }}</p>
+          <div class="stars">
+            @for(i of [1,2,3,4,5]; track i) {
+              <span [class.filled]="i <= recenzija.ocena">&#9733;</span>
+            }
+          </div>
+        </div>
+      }
+      </section>
+  
+    </main>
+  
+    <!-- Reviews -->
+    <!-- <section class="reviews">
+      
+    </section> -->
+  
+    <footer class="footer">
+      <p> {{this.godina}} Vikendica {{ vikendica.imeVlasnika }}</p>
+    </footer>
+  
+  </div>
+  

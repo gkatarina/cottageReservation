@@ -1,0 +1,178 @@
+:root {
+  --primary-color: #669999;       /* main theme color */
+  --accent-color: #88bcbc;        /* lighter accent color */
+  --background-color: #e6f2f2;    /* soft page background */
+  --card-background: #ffffff;     /* white cards for readability */
+  --text-color: #333;             /* default text color */
+}
+
+.page-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  font-family: 'Roboto', sans-serif;
+}
+
+/* .header, .footer {
+  text-align: center;
+  background-color: #669999;
+  color: white;
+  padding: 1rem;
+} */
+
+.content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 1rem;
+  gap: 2rem;
+}
+
+/* Left column = info + gallery + map */
+.left-column {
+  flex: 1 1 400px;
+  max-width: 700px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Cards: info, gallery, map, reservation */
+.info-card,
+.gallery,
+.map-container,
+.reservation-section {
+  background-color: var(--card-background);
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  padding: 1.5rem;
+  border-left: 4px solid var(--primary-color);
+}
+
+/* Gallery */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0.5rem;
+}
+
+.gallery-grid img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* Map */
+.map-container iframe {
+  width: 100%;
+  min-height: 350px;
+  border: none;
+  border-radius: 8px;
+  display: block;
+}
+
+/* Reservation section */
+.reservation-section {
+  flex: 1 1 400px;
+  max-width: 600px;
+}
+
+.vertical-form mat-form-field {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.step-buttons, .confirm-step {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+}
+
+/* Stepper colors */
+mat-step-header.mat-active {
+  background-color: var(--primary-color);
+  color: white;
+  border-radius: 8px;
+}
+
+mat-step-header.mat-completed {
+  color: var(--accent-color);
+}
+
+/* Buttons */
+button.mat-raised-button {
+  background-color: var(--primary-color) !important;
+  color: white !important;
+}
+
+button.mat-raised-button[color="accent"] {
+  background-color: var(--accent-color) !important;
+  color: white !important;
+}
+
+/* Compact reviews inside reservation */
+.reviews-compact {
+  margin-top: 1.5rem;
+  background-color: #f0f8f8;  /* very light accent background */
+  border-radius: 12px;
+  padding: 1rem;
+  max-height: 300px;
+  overflow-y: auto;
+  border-left: 4px solid var(--accent-color);
+}
+
+.review-card-compact {
+  border-bottom: 1px solid #ddd;
+  padding: 0.5rem 0;
+}
+
+.review-card-compact:last-child {
+  border-bottom: none;
+}
+
+.review-card-compact .stars {
+  font-size: 0.9rem;
+  color: #ccc;
+}
+
+.review-card-compact .stars .filled {
+  color: var(--accent-color);
+}
+.stars .filled {
+  color: #ffb400
+}
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .content {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 0.5rem;
+  }
+
+  .left-column,
+  .reservation-section {
+    max-width: 100%;
+  }
+
+  .map-container iframe {
+    min-height: 280px;
+  }
+}
+.star-container {
+  display: flex;
+  gap: 4px;
+  cursor: pointer;
+}
+
+.star {
+  font-size: 1.5rem;
+  color: #ccc;
+  transition: color 0.2s;
+}
+
+.star.filled {
+  color: #ffb400;
+}

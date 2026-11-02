@@ -1,0 +1,157 @@
+<div class="page-container">
+
+    <header class="header">
+        <div class="header-left">
+        <h1>Vlasnicki panel</h1>
+        </div>
+
+        <div class="header-right">
+        <!-- <button mat-button (click)="pocetna()">Početna</button> -->
+        <button mat-button (click)="izlogujSe()">Izloguj se</button>
+        </div>
+    </header>
+
+  
+    <main class="content">
+  
+      <!-- Left side: Vikendice, profile, reservations, forms -->
+      <div class="profile-card">
+        <b>Profil</b><br>
+        {{korisnik.ime}}<br>
+        {{korisnik.prezime}}<br>
+        {{korisnik.telefon}}<br>
+        {{korisnik.adresa}}<br>
+        {{korisnik.imejl}}<br>
+        <img [src]="'http://localhost:8080/upload/' + korisnik.profilna_slika" class="profile-img">
+      </div>
+      <div class="left-panel">
+        <div class="rezervacije-card">
+          <b>Rezervacije</b>
+          <div class="scrollable-rezervacije">
+            @for(r of rezervacije; track $index) {
+              @if(r.arhivirano == false) {
+                Datum pocetka: {{r.datumPocetka}}<br>
+                Datum kraja: {{r.datumKraja}}<br>
+                Ime vikendice: {{r.imeVikendice}}<br>
+                @if(r.aktivirano == false) {
+                  <form [formGroup]="reviewForm">
+                    <label>Komentar</label><br>
+                    <textarea formControlName="comment"></textarea><br>
+                    <div class="buttons-container">
+                      <button (click)="odobriRezervaciju(r)">Odobri rezervaciju</button>
+                      <button (click)="odbijRezervaciju(r)">Ponisti rezervaciju</button>
+                    </div>
+                  </form>
+                }
+              }
+            }
+          </div>
+        </div>
+        <div class="vikendica-card">
+          <b>Vikendice</b>
+          <div class="scrollable-vikendice">
+            @for(vikendica of vikendice; track $index) {
+              {{vikendica.imeVikendice}} <br>
+              @if(vikendica.imeVlasnika == korisnik.kor_ime) {
+                {{vikendica.cena}} <br>
+                {{vikendica.mesto}} <br>
+                {{vikendica.telefon}} <br>
+                {{vikendica.usluge}} <br>
+                <div class="buttons-container">
+                  <button (click)="urediVikendicu()">Izmeni podatke o vikendici</button>
+                  <button (click)="obrisiVikendicu(vikendica)">Obrisi vikendicu</button>
+                </div>
+  
+                @if(this.urediVikendicuValue) {
+                  <form>
+                    <input type="text" name="mesto" [(ngModel)]="vikendica.mesto" placeholder="Mesto"> <br>
+                    <input type="number" name="cena" [(ngModel)]="vikendica.cena" placeholder="Cena po nocenju"> <br>
+                    <input type="text" name="telefon" [(ngModel)]="vikendica.telefon" placeholder="Telefon"> <br>
+                    <textarea name="usluge" [(ngModel)]="vikendica.usluge" placeholder="Usluge"></textarea> <br>
+                    <input type="number" name="lantitude" [(ngModel)]="vikendica.lantitude" placeholder="Latitude"> <br>
+                    <input type="number" name="longitude" [(ngModel)]="vikendica.longitude" placeholder="Longitude"> <br>
+                    <button (click)="izmeniV(vikendica)">Potvrdi izmene</button>
+                  </form>
+                }
+              }
+            }
+          </div>
+          
+        </div>
+        <div class="forms-card">
+            <h2>Dodaj novu vikendicu</h2>
+            <form #novaVikendicaForm="ngForm" (ngSubmit)="dodajVikendicu(novaVikendica)">
+              <input type="text" name="imeVikendice" [(ngModel)]="novaVikendica.imeVikendice" placeholder="Ime vikendice"> <br>
+              <input type="text" name="mesto" [(ngModel)]="novaVikendica.mesto" placeholder="Mesto"> <br>
+              <input type="number" name="cena" [(ngModel)]="novaVikendica.cena" placeholder="Cena po noćenju"> <br>
+              <input type="text" name="telefon" [(ngModel)]="novaVikendica.telefon" placeholder="Telefon"> <br>
+              <textarea name="usluge" [(ngModel)]="novaVikendica.usluge" placeholder="Usluge"></textarea> <br>
+              <input type="number" name="latitude" [(ngModel)]="novaVikendica.lantitude" placeholder="Latitude"> <br>
+              <input type="number" name="longitude" [(ngModel)]="novaVikendica.longitude" placeholder="Longitude"> <br>
+              <label>Dodaj slike vikendice:</label> <br>
+              <input type="file" accept="image/*" multiple (change)="onFileSelected($event)"> <br>
+              <button mat-raised-button color="primary" (click)="uploadFiles(novaVikendica.imeVikendice)">Dodaj slike</button> <br>
+              <button mat-raised-button color="accent" type="submit">Dodaj vikendicu</button>
+            </form>
+          </div>
+          
+          <div class="forms-card">
+            <h2>Dodaj vikendicu iz JSON fajla</h2>
+            <form>
+              <label>JSON fajl:</label> <br>
+              <input type="file" accept="application/json" (change)="onJsonSelected($event)"> <br><br>
+              <label>Dodaj slike vikendice:</label> <br>
+              <input type="file" accept="image/*" multiple (change)="onFileSelected($event)"> <br>
+              <button mat-raised-button color="primary" (click)="uploadFiles(novaVikendicaJson.imeVikendice)">Dodaj slike</button> <br>
+              <button mat-raised-button color="accent" (click)="dodajVikendicu(novaVikendicaJson)">Dodaj vikendicu</button>
+            </form>
+          </div>
+  
+        <div class="forms-card">
+          <b>Izmeni podatke</b>
+          <form #changeForm="ngForm" (ngSubmit)="updateInformation(novi_korisnik)">
+            <input type="text" name="ime" [(ngModel)]="novi_korisnik.ime" placeholder="Ime"> <br>
+            <input type="text" name="prezime" [(ngModel)]="novi_korisnik.prezime" placeholder="Prezime"> <br>
+            <input type="text" name="adresa" [(ngModel)]="novi_korisnik.adresa" placeholder="Adresa"> <br>
+            <input type="text" name="telefon" [(ngModel)]="novi_korisnik.telefon" placeholder="Telefon"> <br>
+            <input type="text" name="imejl" [(ngModel)]="novi_korisnik.imejl" placeholder="Imejl" (ngModelChange)="isEmailValid($event)"> <br>
+            <input type="file" accept="image/*" name="profilna" (change)="onFileSelected($event)"> <br>
+            <input type="text" name="broj_kreditne_kartice" [(ngModel)]="novi_korisnik.broj_kreditne_kartice" placeholder="Broj kartice" (ngModelChange)="isCreditCardValid($event)"> <br>
+            <button type="submit" [disabled]="changeForm.invalid || this.creditCardError || this.emailError">Izmenite podatke</button>
+            {{this.updateMessage}}
+          </form>
+  
+          <b>Promeni sifru</b>
+          <form #form="ngForm" (ngSubmit)="changePassword(oldPassword,newPassword)">
+            <input type="password" name="oldPassword" [(ngModel)]="oldPassword" placeholder="Stara lozinka" required> <br>
+            <input type="password" name="newPassword" [(ngModel)]="newPassword" placeholder="Nova lozinka" required> <br>
+            <input type="password" name="newPasswordRepeated" [(ngModel)]="newPasswordRepeated" placeholder="Ponovi novu lozinku" required> <br>
+            <button type="submit" [disabled]="this.samePassword">Promeni lozinku</button>
+          </form>
+        </div>
+        
+      </div> <!-- end left-panel -->
+  
+      <!-- Right side: calendar -->
+      <div class="right-panel">
+        <full-calendar [options]="calendarOptions" class="modern-calendar"></full-calendar>
+        <dialog #rangeDialog>
+          <h2>Odabrani datumi</h2>
+          <p>{{this.rezervZaAzuriranje.imeVikendice}}</p>
+          <p>Od: {{ this.rezervZaAzuriranje.datumPocetka | date:'shortDate' }}</p>
+          <p>Do: {{ this.rezervZaAzuriranje.datumKraja | date:'shortDate' }}</p>
+          <textarea [(ngModel)]="commentCalender"></textarea><br>
+          <button (click)="onConfirm(this.rezervZaAzuriranje)">Potvrdi rezervaciju</button>
+          <button (click)="onDeny(this.rezervZaAzuriranje)">Odbij rezervaciju</button>
+        </dialog>
+      </div>
+      
+  
+    </main>
+  
+    <footer>
+      Vikendica &copy; 2025
+    </footer>
+  
+  </div>
+  

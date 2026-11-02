@@ -1,0 +1,104 @@
+<div class="page-container">
+
+    <!-- HEADER -->
+    <header class="header">
+      <h1>Administracija Korisnika i Vikendica</h1>
+      <div class="header-right">
+        <!-- <button mat-button (click)="goToHome()">Front Page</button>
+        <button mat-button (click)="logout()">Log Out</button> -->
+      </div>
+    </header>
+  
+    <main class="content">
+  
+      <!-- USERS SECTION -->
+      <section class="card-section users-section">
+        <h2>Korisnici u sistemu</h2>
+        @for(novi_korisnik of this.korisnici; track $index) {
+          <div class="user-card">
+      
+            <div class="user-header" (click)="novi_korisnik.expanded = !novi_korisnik.expanded">
+              <p><strong>Korisnik:</strong> {{novi_korisnik.kor_ime}}</p>
+              <button type="button">
+                {{ novi_korisnik.expanded ? 'Sakrij' : 'Prikaži' }} podatke
+              </button>
+            </div>
+      
+            @if(novi_korisnik.nalog == 'deaktiviran') {
+              <span class="deactivated">nalog je deaktiviran i nije podlozan izmenama.</span>
+            } @else {
+              <form *ngIf="novi_korisnik.expanded" #changeForm="ngForm" (ngSubmit)="updateInformation(novi_korisnik)" class="user-form">
+                <input type="text" name="ime" [(ngModel)]="novi_korisnik.ime" placeholder="Ime">
+                <input type="text" name="prezime" [(ngModel)]="novi_korisnik.prezime" placeholder="Prezime">
+                <input type="text" name="adresa" [(ngModel)]="novi_korisnik.adresa" placeholder="Adresa">
+                <input type="text" name="telefon" [(ngModel)]="novi_korisnik.telefon" placeholder="Telefon">
+                <input type="text" name="imejl" [(ngModel)]="novi_korisnik.imejl" (ngModelChange)="isEmailValid($event)" placeholder="Email">
+                <div class="error-message">{{this.emailError}}</div>
+                <input type="file" accept="image/*" name="profilna" (change)="onFileSelected($event)">
+                <input type="text" name="broj_kreditne_kartice" [(ngModel)]="novi_korisnik.broj_kreditne_kartice" (ngModelChange)="isCreditCardValid($event)" placeholder="Broj kartice">
+                <div class="card-icons">
+                  <img *ngIf="visaKartica" src="visa.png" alt="Visa">
+                  <img *ngIf="dinersKartica" src="Diners-Club-International-icon.png" alt="Diners">
+                  <img *ngIf="masterCard" src="mastercard.svg" alt="Mastercard">
+                </div>
+                <div class="error-message" *ngIf="!visaKartica && !dinersKartica && !masterCard">{{this.creditCardError}}</div>
+                <div class="form-buttons">
+                  <button type="submit" [disabled]="changeForm.invalid || this.creditCardError || this.emailError">Izmeni podatke</button>
+                  <button type="button" (click)="deactivateAccount(novi_korisnik)">Deaktiviraj nalog</button>
+                </div>
+                <div class="update-message">{{this.updateMessage}}</div>
+              </form>
+            }
+          </div>
+        }
+      </section>
+  
+      <!-- PENDING APPROVALS -->
+      <section class="card-section approvals-section">
+        <h2>Odobrenja naloga</h2>
+        @for(k of this.korisnici; track $index) {
+          @if(k.odobren==false && k.nalog=="aktiviran") {
+            <div class="approval-card">
+              <p>{{k.kor_ime}}, {{k.ime}} {{k.prezime}}</p>
+              <p>Email: {{k.imejl}}</p>
+              <p>Broj kartice: {{k.broj_kreditne_kartice}}</p>
+              <p>Adresa: {{k.adresa}}</p>
+              <div class="form-buttons">
+                <button (click)="odobriNalog(k)">Odobri nalog</button>
+                <button (click)="odbijNalog(k)">Odbij nalog</button>
+              </div>
+            </div>
+          }
+        }
+      </section>
+  
+      <!-- VIKENDICE SECTION -->
+      <section class="card-section vikendice-section">
+        <h2>Vikendice sa losim rejtingom</h2>
+        <table class="vikendice-table">
+          <tr>
+            <th>Vikendica</th>
+            <th>Vlasnik</th>
+            <th>Akcija</th>
+          </tr>
+          @for(v of this.vikendice; track $index) {
+            <tr [class.alert]="v.loseOcene">
+              <td>{{v.imeVikendice}}</td>
+              <td>{{v.imeVlasnika}}</td>
+              <td>
+                <button *ngIf="v.loseOcene" (click)="privremenoBlokiraj(v)">Blokiraj vikendicu na 48h</button>
+              </td>
+            </tr>
+          }
+        </table>
+      </section>
+  
+    </main>
+  
+    <!-- FOOTER -->
+    <footer class="footer">
+      <p>2025 Vikendica Admin Panel</p>
+    </footer>
+  
+  </div>
+  

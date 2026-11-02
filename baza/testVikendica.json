@@ -1,0 +1,10 @@
+[{
+    "imeVikendice": "test json vikendica", 
+    "mesto": "beograd",
+    "telefon": "+381 67 122212",
+    "usluge": "test json usluga",
+    "imeVlasnika":  "ana_vlasnik",
+    "cena": 2000,
+    "lantitude": 43.885719,
+    "longitude": 19.435828
+}]

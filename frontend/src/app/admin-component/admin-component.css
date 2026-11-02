@@ -1,0 +1,141 @@
+.page-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    font-family: 'Roboto', sans-serif;
+    background: #e0f0f0;
+    color: #333;
+  }
+  
+  /* HEADER & FOOTER */
+  .header, .footer {
+    position: sticky;
+    top: 0;
+    background-color: #669999;
+    color: white;
+    padding: 1rem;
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  }
+  
+  .header-right button {
+    margin-left: 0.5rem;
+    color: white;
+  }
+  
+  /* MAIN CONTENT */
+  .content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 1rem;
+  }
+  
+  /* CARD SECTIONS */
+  .card-section {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    padding: 1.5rem;
+  }
+  
+  /* USER CARDS */
+  .user-card, .approval-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    background: #fafafa;
+  }
+  
+  .user-card .deactivated {
+    color: red;
+  }
+  
+  .user-form input[type="text"],
+  .user-form input[type="file"] {
+    display: block;
+    width: 100%;
+    margin-bottom: 0.8rem;
+    padding: 0.5rem;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+  }
+  
+  .form-buttons {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+  }
+  
+  .update-message, .error-message {
+    color: red;
+    margin-top: 0.5rem;
+  }
+  
+  .card-icons img {
+    width: 40px;
+    height: 40px;
+    margin-right: 0.3rem;
+  }
+  
+  /* VIKENDICE TABLE */
+  .vikendice-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .vikendice-table th, .vikendice-table td {
+    padding: 0.8rem;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .vikendice-table tr.alert {
+    color: red;
+  }
+  
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .content {
+      padding: 0.5rem;
+    }
+    .form-buttons {
+      flex-direction: column;
+    }
+  }
+  
+  .user-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 0.5rem 1rem 1rem 1rem;
+    margin-bottom: 1rem;
+    background: #fafafa;
+    transition: all 0.3s ease;
+  }
+  
+  .user-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+  }
+  
+  .user-header button {
+    background: #669999;
+    color: white;
+    border: none;
+    padding: 0.3rem 0.8rem;
+    border-radius: 5px;
+  }
+  
+  .user-form {
+    margin-top: 0.8rem;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+  }
+  
